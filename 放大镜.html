@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>放大镜</title>
+    <style>
+        #small {
+            width: 300px;
+            height: 250px;
+            float: left;
+            position: relative;
+            margin-right: 20px;
+        }
+
+        #small img {
+            width: 300px;
+            height: 250px;
+        }
+
+        #big {
+            width: 500px;
+            height: 500px;
+            float: left;
+            overflow: hidden;
+            position: relative;
+            display: none;
+        }
+
+        #big img {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #move {
+            width: 50px;
+            height: 50px;
+            background: yellow;
+            opacity: 0.5;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+<div id="small">
+    <img src="img/ship.jpg" alt="郑和战船模型">
+    <div id="move"></div>
+</div>
+<div id="big">
+    <img src="img/ship.jpg" alt="郑和战船模型">
+</div>
+<script>
+    /*放大镜：
+     *当鼠标移入左边的小图的时候，出现黄色的选框，同时右边的大图出现，并显示对应的位子的图片
+     *
+     */
+    var small = document.querySelector('#small');
+    var big = document.querySelector('#big');
+    var bigimg = document.querySelector('#big img');
+    var move = document.querySelector('#move');
+    //鼠标移入
+    small.onmouseover = function () {
+        big.style.display = 'block';
+        move.style.display = 'block';
+    };
+    //鼠标在小图上移动的时候，小方块跟着鼠标走，即设置move的left和top
+    small.onmousemove = function (ev) {
+        var l = ev.clientX - move.offsetWidth / 2 - small.offsetLeft;
+        var t = ev.clientY - move.offsetHeight / 2 - small.offsetTop;
+        //限制范围，move小方块能移动的最大宽度是父级的宽度减去自身的宽度，最小为0；
+        //限制左右（宽）
+        if (l < 0) {
+            l = 0;
+        } else if (l > small.offsetWidth - move.offsetWidth) {
+            l = small.offsetWidth - move.offsetWidth;
+        }
+        //限制上下（高）
+        if (t < 0) {
+            t = 0;
+        } else if (t > small.offsetHeight - move.offsetHeight) {
+            t = small.offsetHeight - move.offsetHeight;
+        }
+        move.style.top = t + 'px';
+        move.style.left = l + 'px';
+        /*
+         * 左边和右边的联系在与百分比
+         * X轴上走的百分比等于小图上已经走过的距离l除以总距离
+         * */
+        var scaleX = l / (small.offsetWidth - move.offsetWidth);
+        var scaleY = t / (small.offsetHeight - move.offsetHeight);
+        //大图走过的距离=百分比*大图能走的总距离
+        //负号，让图片向上向左移动
+        bigimg.style.top = -scaleY * (bigimg.offsetHeight - big.offsetHeight) + 'px';
+        bigimg.style.left = -scaleX * (bigimg.offsetWidth - big.offsetWidth) + 'px';
+    };
+    //鼠标移出
+    small.onmouseout = function () {
+        big.style.display = 'none';
+        move.style.display = 'none';
+    };
+</script>
+</body>
+</html>
