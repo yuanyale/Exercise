@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽-事件的高级应用</title>
+    <style>
+        #box{
+            width: 100px;
+            height: 100px;
+            background: #000;
+            position: absolute;
+            left: 0;
+            top:0;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+<script>
+    /*
+    *1.当鼠标按下的时候，获取鼠标的位置和box的位置，用鼠标的位置减去box的位置就是鼠标在box上的点击点
+    * 2.鼠标移动的时候，给box计算left和top值，
+    * 3.鼠标抬起的时候，移除移动事件
+     */
+    var box=document.getElementById('box');
+    box.onmousedown=function (ev) {
+        //鼠标的起始位置
+        var disX=ev.clientX-box.offsetLeft;
+        var disY=ev.clientY-box.offsetTop;
+        //主语是document，如果主语是box的话，鼠标移动太快的时候，会脱离box
+        //原因是因为mousemove事件是由浏览器的频率决定的，如果鼠标的移动速度大于浏览器的频率，那么mousemvoe事件可能会漏发生，解决方法是把事件加在document上
+        document.onmousemove=function (ev) {
+            //鼠标现在的位置
+            var l=ev.clientX-disX;
+            var t=ev.clientY-disY;
+            //限制范围
+            if(l<50){
+                //吸附功能
+                l=0;
+            }else if(l>document.documentElement.clientWidth-box.offsetWidth-50){
+                l=document.documentElement.clientWidth-box.offsetWidth;
+            }
+            if(t<50){
+                t=0;
+            }else if(t>document.documentElement.clientHeight-box.offsetHeight-50){
+                t=document.documentElement.clientHeight-box.offsetHeight;
+            }
+            //给box赋值
+            box.style.left=l+'px';
+            box.style.top=t+'px';
+        };
+        //移除鼠标事件
+        document.onmouseup=function () {
+            document.onmousemove=null;
+        };
+        //阻止图片和文字的选中行为（浏览器默认的行为）
+        return false;
+    }
+</script>
+</body>
+</html>

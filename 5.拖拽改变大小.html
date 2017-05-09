@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽改变大小</title>
+    <style>
+        #box{
+            width: 150px;
+            height: 150px;
+            border: 5px solid #f00;
+            background: #000;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+<script>
+var box=document.getElementById('box');
+box.onmousedown=function (ev) {
+    var disX=ev.clientX;
+    var w=box.clientWidth;
+    if(box.getBoundingClientRect().right-disX<=5){
+        box.style.cursor='e-resize';
+        document.onmousemove=function (ev) {
+            //不加box的宽的话，在点击的时候会突然变成0
+            box.style.width=ev.clientX-disX+w+'px';
+        }
+    }
+    //不移除会继续可以移动
+    document.onmouseup=function () {
+        document.onmousemove=null;
+    }
+}
+</script>
+</body>
+</html>
