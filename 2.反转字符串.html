@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>反转字符串</title>
+</head>
+<body>
+<script>
+    /*
+    *1.先把一个字符串拆分成一个数组，string.split（）
+    * 2.把这个数组反转，array.reverse（）
+    * 3.把反转后的数组连成字符串，array.join
+     */
+    function rev(str) {
+        var arr=[];
+        arr=str.split('');
+        arr=arr.reverse();
+        str=arr.join('');
+        console.log(str);
+        return str;
+    }
+    rev("hello");
+    rev("Hello World");
+
+</script>
+</body>
+</html>
