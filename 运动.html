@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				width: 730px;
+				height: 454px;
+				margin: 30px auto;
+				position: relative;
+				overflow: hidden;
+			}
+			#box ul{
+				position: absolute;
+				left: 0;
+			}
+			#box li{
+				list-style: none;
+				float: left;
+			}
+			#box div{
+				height: 70px;
+				width: 100%;
+				background: rgba(0,0,0,0.6);
+				position: absolute;
+				bottom: 0;
+				font-family: "微软雅黑";
+				color: #fff;
+				text-indent: 20px;
+			}
+			#box div h3{
+				line-height: 40px;
+			}
+		</style>
+		<script src="js/move.js"></script>
+		<script>
+			window.onload=function(){
+				var box=document.getElementById("box");
+				var ul=document.querySelector("ul");
+				var div=document.querySelector("#box div");
+				var n=0;
+				
+				var textArr=[
+						{"title":'盛惠而来',"content":'京东携手天天果园百万车厘子，29元包邮畅想'},
+						{"title":'荣耀7',"content":'有点不同，0元预约，免费抽奖1999元'},
+						{"title":'老板购物节',"content":'2015我要更省，老板XX购物节精彩来袭'},
+						{"title":'送钱送美酒',"content":'大盘让我心碎，我在京东买醉送钱送美酒'},
+						{"title":'玩转暑假',"content":'追风少年，联想拯救者全国独家抢购'},
+						{"title":'游园门票',"content":'奔跑吧周末游游园门票一元秒杀'}
+					];
+					
+				
+				//初始化文字内容
+				div.innerHTML='<h3>'+textArr[0].title+'</h3><p>'+textArr[0].content+'</p>';
+				
+				
+				//设置ul的宽度
+				ul.innerHTML+=ul.innerHTML;
+				var lis=document.querySelectorAll("li");
+				var w=parseInt(getComputedStyle(lis[0]).width);
+				
+				ul.style.width=w*lis.length+'px';
+				
+				
+				//动起来
+				var timer=setInterval(pic,3000);
+				pic();
+				function pic(){
+					n++;
+					move(div,{'bottom':-70},500,'linear',function(){
+						move(ul,{'left':-w*n},1000,'linear',function(){
+							if(n==lis.length/2){
+								ul.style.left=0;
+								n=0;
+							}
+							
+							div.innerHTML='<h3>'+textArr[n].title+'</h3><p>'+textArr[n].content+'</p>';
+							move(div,{'bottom':0},500,'linear');
+						});
+					});
+				}
+				
+				
+				var timer2=null;		
+				box.onmouseenter=function(){
+					clearInterval(timer);
+					clearTimeout(timer2);	
+				};
+				box.onmouseleave=function(){
+			
+					timer2=setTimeout(function(){
+						pic();
+						timer=setInterval(pic,3000);
+					},300);
+				};
+			};
+		</script>
+	</head>
+	<body>
+		<div id="box">
+			<ul>
+				<li><img src="img/1.jpg" alt="" /></li>
+				<li><img src="img/2.jpg" alt="" /></li>
+				<li><img src="img/3.jpg" alt="" /></li>
+				<li><img src="img/4.jpg" alt="" /></li>
+				<li><img src="img/5.jpg" alt="" /></li>
+				<li><img src="img/6.jpg" alt="" /></li>
+			</ul>
+			<div>
+				<h3></h3>
+				<p></p>
+			</div>
+		</div>
+	</body>
+</html>
