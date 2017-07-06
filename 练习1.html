@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #box {
+            position: absolute;
+            top: 25px;
+            left: 200px;
+        }
+
+        #box div {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            transition: 0.5s;
+            opacity: 0.2;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var box = document.getElementById("box");
+            /*
+             * 行数为9(i)		决定top值(每一行的top值都是一样的)			
+             * 列数为10(j)		决定left值(每一列的left值都是一样的)
+             * 
+             * 
+             *方法一：
+             * 嵌套for循环生成div
+             * top
+             * 	每行的top值=当前的行数*一个方块的高度，每一行的值都是相同的	
+
+             * top=i*100;
+             * 
+             * left
+             * 	每列的left值=当前的列数*一个方块的宽度，每一列的值都是相同的
+	
+             * 	left=j*100
+             *  
+             * 方法二：
+             * 一个for生成div
+             * 一共90个div，用i的值%10得到的值就是列数，用i的值除以10，在取整（parseInt）就是行数
+             * 	每一列的left值相同，每一行的top值相同
+             */
+
+
+            var str = '';
+                /*for(var i=0;i<9;i++){
+					for(var j=0;j<10;j++){
+						str+='<div style="left:'+j*102+'px;top:'+i*102+'px;background:url(img/pic.jpg) -'+j*100+'px -'+i*100+'px"></div>';
+					}
+				}*/
+            for (var i = 0; i < 90; i++) {
+                str += '<div style="left:' + i % 10 * 102 + 'px;top:' + (parseInt(i / 10) * 102) + 'px;background:url(img/pic.jpg) -' + i % 10 * 100 + 'px -' + (parseInt(i / 10) * 100) + 'px"></div>';
+            }
+
+            box.innerHTML = str;
+
+            var divs = document.querySelectorAll("#box div");
+
+            for (var i = 0; i < divs.length; i++) {
+                divs[i].onmouseover = function () {
+                    this.style.opacity = 1;
+                    this.style.transform = 'scale(1.5)';
+                };
+                divs[i].onmouseout = function () {
+                    this.style.opacity = 1;
+                    this.style.transform = 'scale(1)';
+                };
+            }
+        };
+    </script>
+</head>
+
+<body>
+    <div id="box"></div>
+</body>
+
+</html>
