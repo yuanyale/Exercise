@@ -1,0 +1,126 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.dis(b) {
+  display: block;
+}
+
+.dis(in) {
+  display: inline-block;
+}
+
+.clearfix {
+  &:after {
+    content: '';
+    .dis(b);
+    clear: both;
+  }
+}
+
+.float(l) {
+  float: left;
+}
+
+.float(r) {
+  float: right;
+}
+
+//nav
+@po: position;
+@bg: background;
+@b: border;
+@p: padding;
+@m: margin;
+@w: width;
+@h: height;
+nav {
+  border-bottom: 1px solid #f0f0f0;
+  @w: 100%;
+  min-width: 944px;
+  @bg: #fff;
+  padding-top: 9px;
+  @po: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  .nav-logo {
+    .float(l);
+    z-index: 6;
+    img {
+      @w: 56px;
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+    li:nth-of-type(1) {
+      margin-right: 134px;
+    }
+    li:nth-of-type(2) a {
+      font: 20px/47px "微软雅黑";
+      color: #ea6f5a;
+      margin-right: 41px;
+    }
+    li:nth-of-type(3) a {
+      color: #000000;
+      font: 18px/47px "微软雅黑";
+      margin-right: 41px;
+    }
+    li input {
+      @w: 160px;
+      @h: 38px;
+      border-radius: 50px;
+      outline: none;
+      @b: none;
+      font-size: 12px;
+      @bg: #eee url("../img/icon-nav.gif") no-repeat right center;
+      text-indent: 20px;
+      margin-top: 2px;
+    }
+  }
+  .nav-fn {
+    .float(r);
+    font-size: 16px;
+    line-height: 47px;
+    li:nth-of-type(1) a {
+      color: #969696;
+      font-weight: bold;
+    }
+    li:nth-of-type(2) a {
+      color: #969696;
+      @m: 0 34px;
+    }
+    li:nth-of-type(3) a {
+      .dis(in);
+      @w: 78px;
+      @h: 36px;
+      @b: 1px solid #ea6f5a;
+      color: #ea6f5a;
+      text-align: center;
+      line-height: 36px;
+      border-radius: 5px;
+    }
+    li:nth-of-type(4) a {
+      .dis(in);
+      @w: 100px;
+      @h: 38px;
+      color: #fff;
+      @bg: #ea6f5a url("../img/icon-4.gif") no-repeat 8px 10px;
+      text-align: center;
+      line-height: 38px;
+      border-radius: 5px;
+      @m: 0 20px;
+    }
+  }
+  li {
+    .float(l);
+  }
+}

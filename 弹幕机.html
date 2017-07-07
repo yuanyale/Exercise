@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #wrap {
+      width: 600px;
+      height: 400px;
+      border: 1px solid #000;
+      padding: 5px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .active {
+      position: absolute;
+      display: block;
+      background: #ccc;
+    }
+
+    p {
+      margin-top: 370px;
+      margin-left: 100px;
+    }
+
+    input[type="text"] {
+      width: 300px;
+      height: 28px;
+      vertical-align: middle;
+    }
+
+    input[type="button"] {
+      height: 28px;
+      width: 60px;
+      background: #d9b727;
+      color: #fff;
+      border: none;
+      font: 16px/24px "微软雅黑";
+      vertical-align: middle;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrap">
+    <div class="contaner">
+
+    </div>
+    <p><input type="text" placeholder="点击输入"><input type="button" value="提交"></p>
+  </div>
+  <script>
+    let btn = document.querySelector("input[type='button']");
+    //函数完成后清空input框中的内容
+    //按下回车键的时候
+    document.querySelector("input[type='text']").onkeydown = function(ev) {
+      if (ev.keyCode === 13) {
+        bi();
+        document.querySelector("input[type='text']").value='';
+      }
+    }
+    //点击提交的时候
+    btn.onclick = function() {
+      bi();
+      document.querySelector("input[type='text']").value='';
+    }
+
+
+    function bi() {
+      let val = document.querySelector("input[type='text']").value;
+      let box = document.querySelector(".contaner");
+      //1.创建span标签，随机给top值，添加到父元素身上
+      let span = document.createElement('span');
+      span.innerHTML = val;
+      span.className = 'active';
+      span.style.top = Math.random() * 350 + 'px';
+      span.style.right = 0;
+      box.appendChild(span);
+      //开启定时器，不断修改span的right值
+      let timer;
+      let n = 0;
+      timer = setInterval(move, 15);
+
+      function move() {
+        span.style.right = (n++) + 'px';
+        //当span超出父级范围的时候，移除span标签
+        if (n > 585) {
+          clearInterval(timer);
+          box.removeChild(span);
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
